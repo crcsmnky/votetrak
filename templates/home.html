@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <div class="col-md-7">
+        {% for b in bills %}
+            <h3><a href="/bills/{{ b.bill_id}}">{{ b.short_title}}</a></h3>
+            <p>
+                By <a href="#">{{ b.sponsor.title }} {{ b.sponsor.first_name }} {{ b.sponsor.last_name }}</a>
+                <br>
+                {{ b.official_title }}
+            </p>
+        {% endfor %}
+    </div>
+
+    <div class="col-md-3">
+        <ul class="list-group">
+            {% for u in updates %}
+                {% if u.update is not none %}
+                    <li class="list-group-item">
+                        <small>
+                            <strong>{{ u.legislative_day }}</strong>&nbsp;
+                            {{ u['update']|truncate(50, True) }}
+                        </small>    
+                    </li>                    
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+
+{% endblock %}
