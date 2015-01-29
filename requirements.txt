@@ -1,0 +1,12 @@
+amqp==1.4.6
+anyjson==0.3.3
+args==0.1.0
+billiard==3.3.0.19
+celery==3.1.17
+clint==0.4.1
+ipython==2.3.1
+kombu==3.0.24
+pytz==2014.10
+redis==2.10.3
+sunlight==1.2.8
+twitter==1.15.0
