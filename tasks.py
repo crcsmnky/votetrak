@@ -1,4 +1,3 @@
-import celery
 import sunlight
 import logging
 import redis
@@ -7,17 +6,18 @@ import json
 import time
 from ConfigParser import ConfigParser
 from datetime import datetime, timedelta
+from app import app
 
 
-logging.basicConfig(
-    level=logging.INFO, 
-    format='%(levelname)s: %(name)s.%(module)s.%(funcName)s: %(message)s')
+# logging.basicConfig(
+#     level=logging.INFO, 
+#     format='%(levelname)s: %(name)s.%(module)s.%(funcName)s: %(message)s')
 
 
-class Votes(celery.Task):
-    db = None
+class Votes(app.Task):
     twitterapi = None
     cache = None
+    ignore_result = True
 
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
