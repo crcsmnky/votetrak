@@ -12,14 +12,13 @@ logging.basicConfig(level=logging.DEBUG, format='%(levelname)s: %(name)s.%(modul
 
 class Votes(object):
     db = None
-    config = None
     twitter = None
     cache = None
 
     def __init__(self, *args, **kwargs):
         self.logger = logging.getLogger(__name__)
         self.config = ConfigParser()
-        self.config.read(kwargs.get('config', 'dev.config'))
+        self.config.read(kwargs.get('config', 'task.config'))
 
         self.logger.debug("read {} sections: {}".format(
             len(self.config.sections()), self.config.sections()))
