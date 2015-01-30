@@ -8,7 +8,7 @@ config.read('votetrak.config')
 
 app = celery.Celery(
     'votetrak',
-    broker='redis://{}:{}/'.format(
+    broker='redis://{}:{}/{}'.format(
         config.get('votetrak','redishost'),
         config.getint('votetrak','redisport'),
         config.getint('votetrak','celerydb')),
