@@ -1,2 +1,4 @@
 *.pyc
 votetrak.config
+app.settings
+.DS_Store

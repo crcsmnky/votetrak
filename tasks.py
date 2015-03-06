@@ -59,7 +59,7 @@ class Votes(app.Task):
         return self.twitterapi
 
     def run(self):
-        tweetfmt = "{bill_id_cap}: \"{question}...\" ({title}...) Y:{yes}/N:{no} vtrk.us/{bill_id}"
+        tweetfmt = "{bill_id_cap}: \"{question}...\" ({title}...) Y:{yes},N:{no} vtrk.us/b/{bill_id}"
         datetimefmt = "%Y-%m-%dT%H:%M:%SZ"
         votes = None
 
