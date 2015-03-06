@@ -2,3 +2,5 @@
 votetrak.config
 app.settings
 .DS_Store
+lib/*
+settings.cfg

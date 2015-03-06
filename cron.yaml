@@ -1,0 +1,5 @@
+cron:
+- description: tweet congressional votes every 60 minutes
+  url: /tweet-vote
+  schedule: every 60 minutes
+  timezone: America/Chicago
