@@ -1,5 +1,0 @@
-PORT = 5000
-DEBUG = True
-SECRET_KEY = SECRET_KEY
-SUNLIGHT_API_KEY = SUNLIGHT_API_KEY
-SUNLIGHT_BILL_FIELDS = "summary_short,votes,official_title,short_title,sponsor,introduced_on,last_action_at,last_vote_at,sponsor_id,urls,chamber,history,enacted_as"
