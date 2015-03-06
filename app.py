@@ -1,37 +1,15 @@
 #!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
+
 import webapp2
 import time
 import json
 import tweepy
 import logging
 
-from google.appengine.ext import ndb
 from google.appengine.api import urlfetch
 from webapp2_extras import jinja2
 from ConfigParser import SafeConfigParser
 from datetime import datetime, timedelta
-
-
-class TweetVote(ndb.Model):
-    tweet = ndb.TextProperty()
-    bill_id = ndb.StringProperty()
-    voted_at = ndb.DateTimeProperty()
-    tweeted_at = ndb.DateTimeProperty(auto_now_add=True)
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -98,14 +76,7 @@ class TweetVoteHandler(BaseHandler):
     _twitterapi = None
 
     def get(self):
-        query = TweetVote.query().order(-TweetVote.voted_at)
-        tweet_votes = query.fetch(1, projection=[TweetVote.voted_at])
-
-        try:
-            last_voted_at = self.generate_last_voted_at(tweet_votes[0].voted_at)
-        except IndexError:
-            last_voted_at = self.generate_last_voted_at()
-
+        last_voted_at = self.generate_last_voted_at()
         votes = self.get_votes(last_voted_at)
 
         if votes:
@@ -113,10 +84,6 @@ class TweetVoteHandler(BaseHandler):
             for v in votes:
                 tweet = self.tweet_vote(v)
                 self.response.write(tweet + '<br>')
-                tweetvote = TweetVote(
-                    bill_id=v['bill_id'], tweet=tweet, 
-                    voted_at=self.convert_to_datetime(v['voted_at']))
-                tweetvote.put()
 
     def get_votes(self, voted_at):
         key = self.config.get('sunlight', 'key')
@@ -162,14 +129,9 @@ class TweetVoteHandler(BaseHandler):
             self._twitterapi = tweepy.API(auth)
         return self._twitterapi
 
-    def convert_to_datetime(self, datestr):
+    def generate_last_voted_at(self):
         datetimefmt = "%Y-%m-%dT%H:%M:%SZ"
-        return datetime.strptime(datestr, datetimefmt)
-
-    def generate_last_voted_at(self, dt=None):
-        datetimefmt = "%Y-%m-%dT%H:%M:%SZ"
-        if dt is None:
-            dt = datetime.utcnow().replace(microsecond=0) - timedelta(minutes=60)
+        dt = datetime.utcnow().replace(microsecond=0) - timedelta(minutes=60)
         return dt.strftime(datetimefmt)
 
 
