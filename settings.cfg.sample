@@ -1,0 +1,17 @@
+[sunlight]
+key: SUNLIGHT_API_KEY
+
+[bills]
+url: https://congress.api.sunlightfoundation.com/bills?apikey={key}&fields={fields}&bill_id={bill_id}
+fields: summary_short,votes,official_title,short_title,sponsor,introduced_on,last_action_at,last_vote_at,sponsor_id,urls,chamber,history,enacted_as
+
+[votes]
+url: https://congress.api.sunlightfoundation.com/votes?apikey={key}&fields={fields}&voted_at__gt={voted_at}
+fields: bill_id,bill,breakdown,voted_at,question,result
+
+[twitter]
+consumer_key: CONSUMER_KEY
+consumer_secret: CONSUMER_SECRET
+access_token: ACCESS_TOKEN
+access_token_secret: ACCESS_TOKEN_SECRET
+tweet: {bill_id_cap}: "{question}..." ({title}...) Y:{yes}/N:{no} votetrak.us/bills/{bill_id}
