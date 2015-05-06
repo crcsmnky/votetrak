@@ -115,7 +115,7 @@ class TweetVoteHandler(BaseHandler):
             no=vote['breakdown']['total']['Nay']            
         )
         logging.info(tweet)
-        self.get_twitter().update_status(tweet)
+        self.get_twitter().update_status(status=tweet)
         return tweet
 
     def get_twitter(self):
